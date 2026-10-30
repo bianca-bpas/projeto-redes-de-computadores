@@ -11,5 +11,5 @@ while True:
     print("Server UDP ativo")
     data, addr = s.recvfrom(1024)
     msg = data.decode('utf-8')
-    thread = threading.Thread(target=app,args=(data,addr))
+    thread = threading.Thread(target=app,args=(msg,addr))
     thread.start()
