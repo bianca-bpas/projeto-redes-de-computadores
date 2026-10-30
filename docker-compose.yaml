@@ -1,0 +1,73 @@
+services:
+  dns:
+    build: .
+    ports:
+      - 10000:10000
+    command: python3 src/dns.py
+    networks:
+      minha-rede:
+        ipv4_address: 172.20.0.2 
+
+  server-tcp: 
+    build: .
+    ports:
+      - 10001:10001
+    command: python3 src/server_tcp.py
+    depends_on:
+      - dns
+    networks:
+      minha-rede:
+        ipv4_address: 172.20.0.3
+
+  server-udp:
+    build: .
+    ports:
+      - 10002:10002
+    command: python3 src/server_udp.py
+    depends_on:
+      - dns
+    networks:
+      minha-rede:
+        ipv4_address: 172.20.0.4
+
+  client-tcp:
+    build: .
+    ports:
+      - 10003:10003
+    command: python3 src/client_tcp.py
+    depends_on:
+      - dns
+    networks:
+      minha-rede:
+        ipv4_address: 172.20.0.5
+
+  client-udp:
+    build: .
+    ports:
+      - 10004:10004
+    command: python3 src/client_udp.py
+    depends_on:
+      - dns
+    networks:
+      minha-rede:
+        ipv4_address: 172.20.0.6
+
+  invalid:
+    build: .
+    ports:
+      - 10005:10005
+    command: python3 src/invalid.py
+    depends_on:
+      - dns
+    networks:
+      minha-rede:
+        ipv4_address: 172.20.0.7
+
+networks:
+  minha-rede:
+    driver: bridge
+    ipam: 
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
