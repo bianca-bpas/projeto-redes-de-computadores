@@ -1,6 +1,15 @@
 import socket
 import threading
 
+reg = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+reg.bind(("172.20.0.4", 10002))
+reg_msg = "reg server-udp.com 172.20.0.4 10002"
+reg.sendto(reg_msg.encode("utf-8"),("172.20.0.2", 10000))
+
+resp, _ = reg.recvfrom(1024)
+#nesse caso tem que fechar obrigatoriamenre, pois o outro socket UDP tem o mesmo ip e porta
+reg.close()
+
 def app(data,addr):
     ...
  

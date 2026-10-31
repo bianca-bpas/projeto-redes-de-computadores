@@ -37,6 +37,7 @@ services:
     command: python3 src/client_tcp.py
     depends_on:
       - dns
+      - server-tcp
     networks:
       minha-rede:
         ipv4_address: 172.20.0.5
@@ -48,6 +49,7 @@ services:
     command: python3 src/client_udp.py
     depends_on:
       - dns
+      - server-udp
     networks:
       minha-rede:
         ipv4_address: 172.20.0.6
