@@ -19,7 +19,6 @@ s.listen()
 print("Server TCP ativo")
 
 while True:
-    
     conn, addr = s.accept()
     thread = threading.Thread(target=connection,args=(conn,addr))
     thread.start()
